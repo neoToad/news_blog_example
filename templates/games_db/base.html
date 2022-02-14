@@ -1,0 +1,62 @@
+{% load static %}
+
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <title>{{ title }}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% block meta_desc %}
+    {% endblock meta_desc %}
+
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css">
+    <link href="{% static 'games_db/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'games_db/mdb.min.css' %}" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'games_db/styles.css' %}">
+
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-205212210-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'UA-205212210-1');
+    </script>
+
+    {% block bing_auth %}
+    {% endblock bing_auth %}
+
+    <script src="https://cdn.websitepolicies.io/lib/cookieconsent/1.0.3/cookieconsent.min.js" defer></script><script>window.addEventListener("load",function(){window.wpcc.init({"border":"thin","corners":"small","colors":{"popup":{"background":"#f6f6f6","text":"#000000","border":"#555555"},"button":{"background":"#555555","text":"#ffffff"}},"position":"bottom","content":{"href":"/cookie-policy"}})});</script>
+
+  </head>
+  <body>
+  {% include "games_db/navbar.html" %}
+
+  {% if message %}
+    <div class="alert alert-{{ alert }} mb-0 alert-dismissible alert-absolute fade show alert-custom"
+         id="success-alert"
+         role="alert" data-mdb-color="secondary">
+      <i class="fas fa-check me-2"></i>
+      {{ message }}
+      <button type="button" class="btn-close ms-2" data-mdb-dismiss="alert" aria-label="Close"></button>
+    </div>
+  {% endif %}
+
+
+
+    {% block pageheader %}
+    {% endblock pageheader %}
+
+    {% block content %}
+
+
+    {% endblock content %}
+  {% include "games_db/footer.html" %}
+  
+
+    {% include "games_db/scripts.html" %}
+    {% block extra_scripts %}
+    {% endblock extra_scripts %}
+  </body>
+</html>

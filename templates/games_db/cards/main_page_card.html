@@ -1,0 +1,16 @@
+{% load humanize %}
+
+
+<div class="col-12 col-md-6 col-lg-4 py-3 card-link-style">
+  <a href="{% url 'game_site:article' article.id %}">
+    <div class="card card-other-main mb-3">
+      <img src="{{ article.main_image.url }}" class="card-img-top card-img-main" style="max-height: 200px;" alt="...">
+      <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <p class="card-text">{% if article.description_len > 165 %}
+          {{ article.description|slice:":165" }}...{% else %}{{ article.description }}{% endif %}</p>
+        <p class="card-text"><small class="text-muted">Written by {{ article.author}} {{ article.date_added|naturaltime }}</small></p>
+      </div>
+    </div>
+  </a>
+</div>

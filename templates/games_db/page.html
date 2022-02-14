@@ -1,0 +1,27 @@
+{% extends "games_db/base.html" %}
+{% load static %}
+
+{% block meta_desc %}
+  <meta name="description" content='A website with video game news, deals, guides, and reviews!'>
+{% endblock meta_desc %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+      <div class="column g-5 col-sm-12 col-md-8 card-link-style">
+      <h1>Latest Game {{ page }}</h1>
+      {% for article in news_articles %}
+        {% include "games_db/cards/card_type_a.html" %}
+      {% endfor %}
+    </div>
+    <div class="column g-5 col-sm-12 col-md-4">
+      <div class="d-none d-md-block d-md-none card-link-style">
+        <h3>Popular {{ page }}</h3>
+        {% for article in news_articles %}
+          {% include "games_db/cards/card_type_b.html" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+  </div>
+{% endblock content %}

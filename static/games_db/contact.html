@@ -1,0 +1,103 @@
+{% extends "games_db/base.html" %}
+
+{% block content %}
+
+  <style type="text/css">
+
+  .form-control {
+    border-color: #d7d7d7;
+    box-shadow: none;
+  }
+  .form-control:focus, .btn:focus {
+    border-color: #a177ff;
+    box-shadow: 0 0 8px #c2a8ff;
+  }
+  .contact-form {
+    width: 500px;
+    margin: 0 auto;
+    padding: 40px 0;
+  }
+  .contact-form form {
+    background: #fff;
+    padding: 40px;
+    border-radius: 6px;
+  }
+  .contact-form h1 {
+    text-align: center;
+    font-size: 50px;
+    margin: 0 0 15px;
+  }
+  .contact-form .form-group {
+    margin-bottom: 20px;
+  }
+  .contact-form .form-control, .contact-form .btn  {
+    border-radius: 2px;
+    min-height: 40px;
+    transition: all 0.5s;
+    outline: none;
+  }
+  .contact-form .btn {
+    background: #a177ff;
+    font-size: 16px;
+    min-height: 50px;
+    border: none;
+  }
+  .contact-form .btn:hover, .contact-form .btn:focus {
+    background: #8048ff;
+    outline: none;
+  }
+  .contact-form .btn i {
+    margin-right: 5px;
+  }
+  .contact-form label {
+    color: #bbb;
+    font-weight: normal;
+  }
+  .contact-form textarea {
+    resize: vertical;
+  }
+  .hint-text {
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 25px;
+    opacity: 0.8;
+  }
+  </style>
+  <div class="contact-form contact-form-c" style="width: 100%;">
+    <form action='' method="post">{% csrf_token %}
+      <h1 class="h3 mb-3 font-weight-normal">Contact Us</h1>
+      <p class="hint-text">We'd love to hear from you, please drop us a line anytime.</p>
+
+      <div class="form-group">
+        <label for="inputName">Name</label>
+        <input type="text" name="name" id="inputName" class="form-control" placeholder="Name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="inputEmail">Email Address</label>
+        <input type="email" name="email" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+      </div>
+
+      <div class="form-group">
+        <label for="inputMessage">Message</label>
+        <textarea name="message" id="inputMessage" class="form-control" placeholder="Message" rows="5" required></textarea>
+      </div>
+
+      {% for field in form %}
+        <p>
+          {% for error in field.errors %}
+            <p style="color:red;">{{error}}</p>
+          {% endfor %}
+        </p>
+      {% endfor %}
+      {% if registration_form.non_field_errors %}
+        <div style="color:red;">
+          <p>{{registration_form.non_field_errors}}</p>
+        </div>
+      {% endif %}
+
+      <button class="btn btn-lg btn-primary btn-block" type="submit"><i class="fa fa-paper-plane"></i>Send</button>
+    </form>
+  </div>
+
+{% endblock content %}

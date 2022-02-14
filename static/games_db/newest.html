@@ -1,0 +1,103 @@
+{% extends "games_db/base.html" %}
+{% load static %}
+
+{% block content %}
+<!--Main layout-->
+  <main class="my-5">
+    <div class="container">
+      <!--Grid row-->
+      <div class="row">
+
+
+
+        <!--Grid column-->
+        <div class="col-md-12 col-lg-9 mb-4">
+          <h1 class="h3 mb-4">Newest Articles</h1>
+          <!--Section: Content-->
+          <section>
+            <!-- Post -->
+            {% for article in articles %}
+            <div class="row">
+              <div class="col-md-4 mb-4">
+                <div class="bg-image hover-overlay shadow-1-strong rounded ripple" data-mdb-ripple-color="light">
+                  <img src="{{ article.main_image.url }}" class="img-fluid" />
+                  <a href="{% url 'game_site:article' article.id %}">
+                    <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                  </a>
+                </div>
+              </div>
+
+              <div class="col-md-8 mb-4">
+                <h5>{{ article.title }}</h5>
+                <p>
+                  {{ article.description }}
+                </p>
+
+                <a href="{% url 'game_site:article' article.id %}" class="btn btn-primary" role="button" >Read</a>
+              </div>
+            </div>
+
+
+            {% endfor %}
+          </section>
+          <!--Section: Content-->
+        </div>
+        <!--Grid column-->
+
+
+        <!--Grid column-->
+        <div class="d-none mb-4 text-center " style="z-index: 4;">
+          <!--Section: Sidebar-->
+          <section class="sticky-top" style="top: 80px;">
+            {% include "games_db/ads/ads_right.html" %}
+            <!--Section: Video-->
+          </section>
+          <!--Section: Sidebar-->
+        </div>
+        <!--Grid column-->
+      </div>
+      <!--Grid row-->
+
+      {% if articles.paginator.num_pages == 1 %}
+      {% else %}
+        {{ articles.num_pages }}
+          <nav class="my-4" aria-label="...">
+            <ul class="pagination pagination-circle justify-content-center">
+              {% if articles.has_previous %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ articles.previous_page_number }}" aria-label="Previous">
+                    <span aria-hidden="true">Previous</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="" aria-label="Previous">
+                    <span aria-hidden="true">First</span>
+                  </a>
+                </li>
+              {% endif %}
+              {% for page in articles.paginator.page_range %}
+                <li class="page-item {% if page == articles.number %}active{% endif %}"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+              {% endfor %}
+              {% if articles.has_next %}
+                <li class="page-item">
+                  <a class="page-link" href="?page={{ articles.next_page_number }}" aria-label="Next">
+                    <span aria-hidden="true">Next</span>
+                  </a>
+                </li>
+              {% else %}
+                <li class="page-item disabled">
+                  <a class="page-link" href="" aria-label="Previous">
+                    <span aria-hidden="true">Last</span>
+                  </a>
+                </li>
+              {% endif %}
+            </ul>
+          </nav>
+      {% endif %}
+
+    </div>
+  </main>
+  <!--Main layout-->
+
+{% endblock content %}

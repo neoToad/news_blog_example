@@ -1,0 +1,16 @@
+{% extends "games_db/base.html" %}
+{% load hitcount_tags %}
+
+{% block content %}
+  <h2>{{article.title}}</h2>
+  <ul>
+        <p class="lead">{{post.description}}</p>
+        <p>Published: {{post.published}}</p>
+        <p>Views: {% get_hit_count for article %}</p>
+  </ul>
+
+  <h3>Popular Posts</h3>
+  {% for p in popular_posts %}
+  <p>{{p.title}}</p>
+  {% endfor %}
+{% endblock %}

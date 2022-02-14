@@ -1,0 +1,9 @@
+
+
+<div class="position-sticky" style="top: 2rem;">
+  <div class="d-md-block card-link-style">
+    {% for article in same_game_articles|slice:":3" %}
+      {% include 'games_db/cards/card_type_b.html' %}
+    {% endfor %}
+  </div>
+</div>

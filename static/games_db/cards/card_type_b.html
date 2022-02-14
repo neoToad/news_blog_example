@@ -1,0 +1,15 @@
+{% load humanize %}
+
+
+<a href="{% url 'game_site:article' article.id %}">
+  <div class="col-12 text-black">
+    <div class="card card-other-main mb-3">
+      <img src="{{ article.main_image.url }}" class="card-img-top card-img-main" style="max-height: 200px;" alt="{{ article.alt_img_tag  }}">
+      <div class="card-body">
+        <h5 class="card-title">{{ article.title }}</h5>
+        <p class="card-text side-card-text">{{ article.description }}</p>
+        <p class="card-text"><small class="text-muted">Written by {{ article.author}} {{ article.date_added|naturaltime }}</small></p>
+      </div>
+    </div>
+  </div>
+</a>

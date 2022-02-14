@@ -1,0 +1,122 @@
+{% extends "games_db/base.html" %}
+{% load static %}
+{% load humanize %}
+{% load social_share %}
+
+{% load hitcount_tags %}
+
+{% block meta_desc %}
+  <meta name="description" content='{{ current_article.description }}'>
+  <meta property="og:title" content='{{ title }}'>
+  <meta property="og:url" content="https://www.whichga.me{{ request.path }}">
+  <meta property='og:type' content='article'>
+  <meta property='og:description' content='{{ current_article.description }}'>
+  <meta property='fb:app_id' content="1033498950729170">
+{% endblock meta_desc %}
+
+{% block pageheader %}
+{% endblock pageheader %}
+
+{% block content %}
+  <div class="container-fluid">
+
+    <div class="row">
+      <div class="d-none col-xl-1 d-xl-block text-center"></div>
+      <div class="col-12 col-md-9 col-xl-8 mt-5">
+        <article class="blog-post">
+          <hr>
+          {% if first_page_false %}
+            <h1 class="blog-post-title">{{ current_article.title }} continued</h1>
+            <div></div>
+          {% else %}
+            <h1 class="blog-post-title">{{ current_article.title }}</h1>
+            <div></div>
+            <div class="d-flex flex bd-highlight">
+              <div class="flex-grow-1"><p class="blog-post-meta">Written by {{ current_article.author }} {{ current_article.date_added|naturaltime }}</p></div>
+              <div class="px-2 bd-highlight">{% post_to_facebook object_or_url "FB-LOGO" "fb-logo" %}</div>
+              <div class="px-2 bd-highlight">{% post_to_twitter "{{current_article.title}}" object_or_url  link_text="TWITTER-LOGO" link_class="fb-logo" %}</div>
+              <div class="px-2 bd-highlight">{% post_to_reddit "{{current_article.title}}" object_or_url link_text="REDDIT-LOGO" link_class="fb-logo" %}</div>
+            </div>
+            <div class="desc-text">{{ current_article.description }}</div>
+            <figure class="figure py-3">
+              <img src="{{ current_article.main_image.url }}" class="figure-img img-fluid rounded" alt="{{ current_article.alt_img_tag }}">
+              <figcaption class="figure-caption">(Image credit: {{ current_article.image_credit }})</figcaption>
+            </figure>
+          {% endif %}
+          <hr>
+          {% for paragraph in paragraphs %}
+            {% if forloop.counter == 3 %}
+              {% include 'games_db/ads/inner_ad_a.html' %}
+            {% elif forloop.counter == 5 %}
+              {% include 'games_db/ads/inner_ad_b.html' %}
+            {% endif %}
+            {% if paragraph.block_quotes %}
+              <hr/>
+              <blockquote class="blockquote fw-bolder fst-italic">
+                <p class="text-center">{{ paragraph.block_quotes }}</p>
+              </blockquote>
+              <hr/>
+            {% endif %}
+            {% if paragraph.paragraph %}
+              <p>{{ paragraph.paragraph|safe }}</p>
+            {% endif %}
+            {% if paragraph.image %}
+              <figure class="figure py-3 my-3">
+                <img src="{{ paragraph.image.url }}" class="figure-img img-fluid rounded" alt="{{ paragraph.alt_img_tag }}">
+                <figcaption class="figure-caption">(Image credit: {{ paragraph.image_credit }})</figcaption>
+              </figure>
+            {% endif %}
+          {% endfor %}
+
+          {% if paragraphs.paginator.num_pages == 1 %}
+          {% else %}
+            {{ paragraphs.num_pages }}
+            <nav aria-label="Page navigation example w-100">
+              <ul class="pagination mx-auto" style="width: fit-content;">
+                {% if paragraphs.has_previous %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ paragraphs.previous_page_number }}" aria-label="Previous">
+                      <span aria-hidden="true">&laquo; Prev Page</span>
+                    </a>
+                  </li>
+                {% endif %}
+                {% for page in paragraphs.paginator.page_range %}
+                  <li class="page-item {% if page == paragraphs.number %}active{% endif %}"><a class="page-link" href="?page={{ page }}">{{ page }}</a></li>
+                {% endfor %}
+                {% if paragraphs.has_next %}
+                  <li class="page-item">
+                    <a class="page-link" href="?page={{ paragraphs.next_page_number }}" aria-label="Next">
+                      <span aria-hidden="true">Next Page &raquo;</span>
+                    </a>
+                  </li>
+                {% endif %}
+              </ul>
+            </nav>
+          {% endif %}
+          {% include 'games_db/ads/bottom_banner.html' %}
+
+        </article>
+      </div>
+
+      <div class="col-md-3 col-xl-3 text-center mt-5" style="z-index: 4;">
+        <div class="sticky-top" style="top: 80px;">
+          {% include "games_db/ads/ads_right.html" %}
+        </div>
+      </div>
+
+    </div>
+
+
+
+    <div class="container">
+      <div class="row">
+        {% for article in same_game_articles|slice:":6" %}
+          {% include "games_db/cards/main_page_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+{% endblock content %}
+
+{% block extra_scripts %}
+{% endblock %}

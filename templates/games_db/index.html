@@ -1,0 +1,82 @@
+{% extends "games_db/base.html" %}
+{% load static %}
+{% load humanize %}
+
+{% block bing_auth %}
+  <meta name="msvalidate.01" content="6CB0ACEED139C54F74063C60BD05F7EA" />
+{% endblock bing_auth %}
+
+{% block pageheader %}
+{% endblock pageheader %}
+
+{% block meta_desc %}
+  <meta name="description" content='A website with video game news, deals, guides, and reviews!'>
+{% endblock meta_desc %}
+
+{% block content %}
+  <div class="container">
+    <div class="row" >
+      {% for article in articles|slice:":1" %}
+
+        <div class="bg-image mb-4 text-white rounded bg-dark mt-5 col-12 col-lg-7 first-art">
+          <a href="{% url 'game_site:article' article.id %}" class="text-white">
+            <img src="{{ article.main_image.url }}" class="img-fluid" alt="{{ article.alt_img_tag }}"/>
+
+            <div class="px-2 text-block opacity-75">
+              <h1 class="display-5 fst-italic">{{ article.title }}</h1>
+              <p class="lead my-3 d-none d-md-block">{{ article.description }}</p>
+            </div>
+          </a>
+        </div>
+
+      {% endfor %}
+      <div class="mt-5 col-12 col-lg-4 mx-auto ">
+        {% for article in articles|slice:"1:2" %}
+          <div class="bg-image mb-4 text-white rounded first-art" >
+            <a href="{% url 'game_site:article' article.id %}" class="text-white">
+              <img src="{{ article.main_image.url }}" class="img-fluid" alt="{{ article.alt_img_tag }}"/>
+              <div class="px-2 ms-2 text-block opacity-75">
+                <h4 class="fst-italic">{{ article.title }}</h4>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+        {% for article in articles|slice:"2:3" %}
+          <div class="card text-white">
+            <a href="{% url 'game_site:article' article.id %}" class="text-white">
+              <img src="{{ article.main_image.url }}" class="card-img" alt="{{ article.alt_img_tag }}">
+              <div class="card-img-overlay d-flex align-content-end flex-wrap">
+                <h5 class="card-title card-main mt-auto">{{ article.title }}</h5>
+              </div>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    </div>
+    <div class="row justify-content-between ms-2">
+      {% for article in articles|slice:"3:5" %}
+        <div class="bg-image mb-4 text-white rounded bg-dark mt-5 col-12 col-lg-5 justify-content-center me-5 first-art" style="height: 100%;">
+          <a href="{% url 'game_site:article' article.id %}" class="text-white">
+            <img src="{{ article.main_image.url }}" class="img-fluid" alt="{{ article.alt_img_tag }}"/>
+            <div class="px-2 ms-2 text-block opacity-75">
+              <h4 class="fst-italic">{{ article.title }}</h4>
+            </div>
+          </a>
+        </div>
+      {% endfor %}
+    </div>
+
+    <hr class="mt-3">
+    <div class="my-5">
+      <div class="row">
+        {% for article in articles|slice:"5:14" %}
+          {% include "games_db/cards/main_page_card.html" %}
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+
+{% endblock content %}
+
+{% block extra_scripts %}
+{% endblock %}
